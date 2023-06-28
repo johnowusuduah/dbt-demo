@@ -38,4 +38,8 @@ schedule_dbt_job:
         run: dbt run
 
     - name: Test dbt models
+<<<<<<< HEAD
         run: dbt test
+=======
+        run: dbt test
+>>>>>>> 079b756 (add requirements.txt)
