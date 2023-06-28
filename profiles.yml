@@ -11,4 +11,4 @@ default:
     warehouse: ${{ secrets.DBT_SNOWFLAKE_WAREHOUSE }}
     schema: ${{ secrets.DBT_SNOWFLAKE_SCHEMA }}
     client_session_keep_alive: False
-    query_tag: github_action_query
+    query_tag: github_action_queries
