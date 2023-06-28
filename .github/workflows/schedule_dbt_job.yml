@@ -4,8 +4,8 @@ on:
   schedule:
     # run at 5AM every single day
     - cron: "0 5 * * *"
-push:
-  branches:
+  push:
+    branches:
     # run on push to master branch
     - master
 env:
@@ -20,19 +20,19 @@ jobs:
     name: schedule_dbt_job
     runs-on: ubuntu-latest
 
-  steps:
-  - name: Check out
-    uses: actions/checkout@master
+    steps:
+      - name: Check out
+        uses: actions/checkout@master
 
-  - uses: actions/setup-python@v2
-    with:
-      python-version: "3.11.x"
+      - uses: actions/setup-python@v2
+        with:
+          python-version: "3.11.x"
 
-  - name: Install dependencies
-    run: |
-      pip install dbt
-      dbt deps
+      - name: Install dependencies
+        run: |
+          pip install dbt
+          dbt deps
 
-    # dbt related commands here - run use --target prod/dev to run for specific environments
-  - name: Run dbt models
-    run: dbt run
+        # dbt related commands here - run use --target prod/dev to run for specific environments
+      - name: Run dbt models
+        run: dbt run
