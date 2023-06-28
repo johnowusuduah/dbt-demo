@@ -1,41 +1,41 @@
 name: schedule_dbt_job
 
 on:
-  schedule:
+schedule:
     # run at 5AM every single day
     - cron: "0 5 * * *"
-  push:
+push:
     branches:
-      # run on push to master branch
-      - master
+    # run on push to master branch
+    - master
 env:
-  DBT_PROFILES_DIR: ./profile
-  DBT_SNOWFLAKE_USERNAME: ${{ secrets.DBT_SNOWFLAKE_USERNAME }}
-  DBT_SNOWFLAKE_PW: ${{ secrets.DBT_SNOWFLAKE_PW }}
-  DBT_SNOWFLAKE_ROLE: ${{ secrets.DBT_SNOWFLAKE_ROLE }}
+DBT_PROFILES_DIR: ./profile
+
+DBT_SNOWFLAKE_USERNAME: ${{ secrets.DBT_SNOWFLAKE_USERNAME }}
+DBT_SNOWFLAKE_PW: ${{ secrets.DBT_SNOWFLAKE_PW }}
+DBT_SNOWFLAKE_ROLE: ${{ secrets.DBT_SNOWFLAKE_ROLE }}
 
 jobs:
-  schedule_dbt_job:
+schedule_dbt_job:
     name: schedule_dbt_job
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check out
-        uses: actions/checkout@v3
+    - name: Check out
+        uses: actions/checkout@master
 
-      - name: Set up Python
-      - uses: actions/setup-python@v3
+    - uses: actions/setup-python@v2
         with:
-          python-version: "3.11.x"
+        python-version: "3.11.x"
 
-      - name: Update pip
+    - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
+        pip install dbt
+        dbt deps
 
-      - name: Install dependencies
-        run: |
-          pip install -r requirements.txt
+    # dbt related commands here - run use --target prod/dev to run for specific environments
+    - name: Run dbt models
+        run: dbt run
 
-      # dbt related commands here - run use --target prod/dev to run for specific environments
-      - name: Run dbt models
-        run: dbt debug
+    - name: Test dbt models
+        run: dbt test
