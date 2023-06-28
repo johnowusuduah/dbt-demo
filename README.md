@@ -10,7 +10,6 @@ Welcome to your new dbt project!
 </p>
 
 
-
 ### Using the starter project
 
 Try running the following commands:
